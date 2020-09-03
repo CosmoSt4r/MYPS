@@ -5,6 +5,6 @@ from datetime import timedelta
 app = Flask(__name__)
 
 app.config.from_object('settings')
-app.permanent_session_lifetime = timedelta(days=30)
+app.permanent_session_lifetime = timedelta(seconds=30)
 
 db = SQLAlchemy(app)

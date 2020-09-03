@@ -1,5 +1,6 @@
 from app import app
 from database import db, User, Password
+from pypasswords import *
 from utils import *
 from flask import render_template, request, redirect, session, url_for, flash
 
@@ -16,6 +17,7 @@ def index():
 def login():
     if 'user' in session:
         return 'Home'
+
     if request.method == 'POST':
         # POST
 
@@ -29,15 +31,13 @@ def login():
 
         found_user = User.query.filter_by(username=username).first()
         if found_user:
-            if password == found_user.password:
+            if hash_it(password) == found_user.password:
                 session['user'] = username
                 return 'Home'
-            else:
-                flash('Wrong password')
-                return render_template('login.html', username=username)
-        else:
-            flash('User not found')
-            return render_template('login.html', username=username)
+
+        flash('Wrong username or password')
+        return render_template('login.html', username=username)
+
     else:
         # GET
 
@@ -61,7 +61,12 @@ def signup():
             flash(invalid)
             return render_template('signup.html', username=username)
         else:
-            return 'New user'
+            new_user = User(username, hash_it(password))
+            db.session.add(new_user)
+            db.session.commit()
+
+            session['user'] = username
+            return 'Home'
     else:
         # GET
 
