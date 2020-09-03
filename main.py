@@ -5,7 +5,7 @@ from flask import render_template, request, redirect
 
 @app.route("/", methods=['GET', 'POST'])
 def index():
-        return 'Hello, World!'
+    return render_template('login.html')
 
 
 if __name__ == '__main__':
