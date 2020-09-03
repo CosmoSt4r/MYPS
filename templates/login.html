@@ -6,7 +6,16 @@
 
 <form class="box" method="post">
   <h1>Login</h1>
-  <input type="text" name="username" placeholder="Username">
+
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for msg in messages %}
+        <p>{{msg}}</p>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+
+  <input type="text" name="username" placeholder="Username" value="{{ username }}">
   <input type="password" name="password" placeholder="Password">
   <input type="submit" value="Login">
 </form>

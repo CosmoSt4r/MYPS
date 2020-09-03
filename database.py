@@ -5,7 +5,7 @@ from datetime import datetime
 class User(db.Model):
 
     user_id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String, nullable=False)
+    username = db.Column(db.String, nullable=False, unique=True)
     password = db.Column(db.String, nullable=False)
     created = db.Column(db.DateTime, default=datetime.now)
 

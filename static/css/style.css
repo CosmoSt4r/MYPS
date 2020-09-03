@@ -1,17 +1,27 @@
+
+
+@font-face {
+  font-family: Poppins;
+  src: url('../fonts/Poppins-Regular.ttf');
+}
+
 body{
   margin: 0;
   padding: 0;
-  font-family: sans-serif;
-  background: #34495e;
+  font-family: Poppins, sans-serif;
+  background: #191919;
 }
+
 .box{
-  width: 300px;
+  font-family: Poppins, sans-serif;
+  width: 350px;
   padding: 40px;
   position: absolute;
   top: 50%;
   left: 50%;
+  border-radius: 25px;
   transform: translate(-50%,-50%);
-  background: #191919;
+  background: black;
   text-align: center;
 }
 .box h1{
@@ -19,6 +29,15 @@ body{
   text-transform: uppercase;
   font-weight: 500;
 }
+
+.box p{
+  color: #2ecc71;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  font-size: 14px;
+}
+
 .box input[type = "text"],.box input[type = "password"]{
   border:0;
   background: none;
@@ -27,6 +46,7 @@ body{
   text-align: center;
   border: 2px solid #3498db;
   padding: 14px 10px;
+  font-size: 16px;
   width: 200px;
   outline: none;
   color: white;
