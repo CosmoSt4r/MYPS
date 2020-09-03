@@ -6,6 +6,8 @@ def check_inputs_login(username, password):
     if username:
         if len(username) < 7:
             return 'Username should be more than 6 characters'
+        elif len(username) > 31:
+            return 'Username should be less than 32 characters'
     else:
         return 'Enter username'
 
@@ -27,6 +29,8 @@ def check_inputs_signup(username, password, confirm_password):
     if username:
         if len(username) < 7:
             return 'Username should be more than 6 characters'
+        elif len(username) > 31:
+            return 'Username should be less than 32 characters'
     else:
         return 'Enter username'
 
