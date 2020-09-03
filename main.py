@@ -1,6 +1,6 @@
 from app import app
 from database import db, User, Password
-from utils import check_inputs
+from utils import *
 from flask import render_template, request, redirect, session, url_for, flash
 
 
@@ -16,38 +16,56 @@ def index():
 def login():
     if 'user' in session:
         return 'Home'
-    else:
-        if request.method == 'POST':
-            # POST
+    if request.method == 'POST':
+        # POST
 
-            username = request.form['username']
-            password = request.form['password']
+        username = request.form['username']
+        password = request.form['password']
 
-            invalid = check_inputs(username, password)
-            if invalid:
-                flash(invalid)
-                return render_template('login.html', username=username)
+        invalid = check_inputs_login(username, password)
+        if invalid:
+            flash(invalid)
+            return render_template('login.html', username=username)
 
-            found_user = User.query.filter_by(username=username).first()
-            if found_user:
-                if password == found_user.password:
-                    session['user'] = username
-                    return 'Home'
-                else:
-                    flash('Wrong password')
-                    return render_template('login.html', username=username)
+        found_user = User.query.filter_by(username=username).first()
+        if found_user:
+            if password == found_user.password:
+                session['user'] = username
+                return 'Home'
             else:
-                flash('User not found')
+                flash('Wrong password')
                 return render_template('login.html', username=username)
         else:
-            # GET
+            flash('User not found')
+            return render_template('login.html', username=username)
+    else:
+        # GET
 
-            return render_template('login.html')
+        return render_template('login.html')
 
 
 @app.route("/signup/", methods=['GET', 'POST'])
 def signup():
-    return render_template('signup.html')
+    if 'user' in session:
+        return 'Home'
+
+    if request.method == 'POST':
+        # POST
+
+        username = request.form['username']
+        password = request.form['password']
+        confirm_password = request.form['confirm_password']
+
+        invalid = check_inputs_signup(username, password, confirm_password)
+        if invalid:
+            flash(invalid)
+            return render_template('signup.html', username=username)
+        else:
+            return 'New user'
+    else:
+        # GET
+
+        return render_template('signup.html')
 
 
 if __name__ == '__main__':
