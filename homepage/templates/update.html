@@ -1,0 +1,14 @@
+{% extends "home_base.html" %}
+
+{% block title %}Update task{% endblock %}
+
+{% block content %}
+
+<h1>Task manager</h1>
+
+<form method="post">
+  <input type="text" name="task_text" placeholder="Enter your task..." value="{{ task.task_text }}"/>
+  <input type="submit" value="Update task"/>
+</form>
+
+{% endblock %}

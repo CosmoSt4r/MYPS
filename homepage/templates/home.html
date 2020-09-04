@@ -1,0 +1,39 @@
+{% extends "home_base.html" %}
+
+{% block title %}Password manager{% endblock %}
+
+{% block content %}
+
+<h1>Password manager</h1>
+
+<form method="post">
+  <input type="text" name="task_text" placeholder="Enter your password..."/>
+  <input type="submit" value="Add pass"/>
+</form>
+
+<table>
+
+  <tr>
+    <th>URL</th>
+    <th>Login</th>
+    <th>Password</th>
+  </tr>
+
+  {% for task in tasks %}
+
+    <tr>
+      <td>{{ task.task_text }}</td>
+      <td>{{ task.created.date() }}</td>
+      <td>
+        <form>
+          <button class="red" formaction="/delete/{{task.task_id}}">Delete</button>
+          <button class="blue" formaction="/update/{{task.task_id}}">Update</button>
+        </form>
+      </td>
+    </tr>
+
+  {% endfor %}
+
+</table>
+
+{% endblock %}

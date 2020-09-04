@@ -9,18 +9,18 @@ from .utils import check_inputs_login, check_inputs_signup
 account = Blueprint('account', __name__, static_folder='static', template_folder='templates')
 
 
-@app.route("/")
+@account.route("/")
 def start_page():
     if 'user' in session:
-        return 'Home'
+        return redirect(url_for('homepage.home'))
     else:
-        return redirect(url_for('login'))
+        return redirect(url_for('account.login'))
 
 
-@app.route("/login/", methods=['GET', 'POST'])
+@account.route("/login/", methods=['GET', 'POST'])
 def login():
     if 'user' in session:
-        return 'Home'
+        return redirect(url_for('homepage.home'))
 
     if request.method == 'POST':
         # POST
@@ -37,7 +37,7 @@ def login():
         if found_user:
             if hash_it(password) == found_user.password:
                 session['user'] = username
-                return 'Home'
+                return redirect(url_for('homepage.home'))
 
         flash('Wrong username or password')
         return render_template('login.html', username=username)
@@ -48,10 +48,10 @@ def login():
         return render_template('login.html')
 
 
-@app.route("/signup/", methods=['GET', 'POST'])
+@account.route("/signup/", methods=['GET', 'POST'])
 def signup():
     if 'user' in session:
-        return 'Home'
+        return redirect(url_for('homepage.home'))
 
     if request.method == 'POST':
         # POST
@@ -70,7 +70,7 @@ def signup():
             db.session.commit()
 
             session['user'] = username
-            return 'Home'
+            return redirect(url_for('homepage.home'))
     else:
         # GET
 
