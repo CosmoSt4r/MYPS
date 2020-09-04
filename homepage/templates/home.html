@@ -6,9 +6,8 @@
 
 <h1>Password manager</h1>
 
-<form method="post">
-  <input type="text" name="task_text" placeholder="Enter your password..."/>
-  <input type="submit" value="Add pass"/>
+<form class="new_pass" method="post">
+  <input type="submit" value="New password"/>
 </form>
 
 <table>
@@ -17,13 +16,17 @@
     <th>URL</th>
     <th>Login</th>
     <th>Password</th>
+    <th>Strength</th>
+    <th>Actions</th>
   </tr>
 
   {% for task in tasks %}
 
     <tr>
-      <td>{{ task.task_text }}</td>
-      <td>{{ task.created.date() }}</td>
+      <td>url</td>
+      <td>login</td>
+      <td>password</td>
+      <td>strength</td>
       <td>
         <form>
           <button class="red" formaction="/delete/{{task.task_id}}">Delete</button>
