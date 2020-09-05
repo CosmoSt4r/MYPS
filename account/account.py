@@ -1,7 +1,6 @@
 from flask import (
     Blueprint, render_template, request,
     redirect, url_for, session, flash)
-from app import app
 from pypasswords import *
 from database import db, User, Password
 from .utils import check_inputs_login, check_inputs_signup
@@ -33,7 +32,7 @@ def login():
             flash(invalid)
             return render_template('login.html', username=username)
 
-        found_user = User.query.filter_by(username=username).first()
+        found_user = User.query.filter_by(username=hash_it(username)).first()
         if found_user:
             if hash_it(password) == found_user.password:
                 session['user'] = username
@@ -65,7 +64,7 @@ def signup():
             flash(invalid)
             return render_template('signup.html', username=username)
         else:
-            new_user = User(username, hash_it(password))
+            new_user = User(hash_it(username), hash_it(password))
             db.session.add(new_user)
             db.session.commit()
 

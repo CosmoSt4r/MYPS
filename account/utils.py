@@ -1,4 +1,5 @@
 from database import User
+from pypasswords import hash_it
 
 
 def check_inputs_login(username, password):
@@ -22,7 +23,7 @@ def check_inputs_login(username, password):
 
 def check_inputs_signup(username, password, confirm_password):
 
-    found_user = User.query.filter_by(username=username).first()
+    found_user = User.query.filter_by(username=hash_it(username)).first()
     if found_user:
         return 'Username already exists'
 
