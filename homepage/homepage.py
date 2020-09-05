@@ -22,7 +22,10 @@ def home():
 
         displayed_passwords = []
         for password in passwords:
-            displayed_passwords.append(decrypt_data(key, [password.url, password.login, password.password]))
+            data = decrypt_data(key, [password.url, password.login, password.password])
+            data.append(get_strength(data[2]))
+
+            displayed_passwords.append(data)
 
         return render_template('home.html', passwords=displayed_passwords)
 
@@ -35,7 +38,6 @@ def new():
         password = request.form['password']
 
         username = session.get('user')
-        print(username)
         key = generate_key(username)
 
         inputs = encrypt_data(key, [url, login, password])

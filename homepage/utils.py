@@ -3,6 +3,8 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.fernet import Fernet
+from zxcvbn import zxcvbn
+from math import log
 
 
 def generate_key(username):
@@ -35,3 +37,23 @@ def decrypt_data(key, inputs):
         decoded_str = dec.decrypt(str_to_decrypt)
         output.append(decoded_str.decode())
     return output
+
+
+def get_strength(password):
+    result = zxcvbn(password)
+
+    green = 25 * log(result.get('guesses'), 16)
+    if green > 255:
+        green = 255
+    red = 255 - green
+
+    if green <= 50:
+        strength = 'Weak'
+    elif 50 < green <= 100:
+        strength = 'Medium'
+    elif 100 < green < 200:
+        strength = 'Strong'
+    else:
+        strength = 'Very Strong'
+
+    return red, green, strength
