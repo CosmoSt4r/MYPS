@@ -1,7 +1,7 @@
 from flask import (
     Blueprint, render_template, request,
     redirect, url_for, session, flash)
-from pypasswords import *
+from pypasswords import hash_it
 from database import db, User, Password
 from .utils import *
 

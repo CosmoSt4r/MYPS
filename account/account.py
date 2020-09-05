@@ -2,7 +2,7 @@ from flask import (
     Blueprint, render_template, request,
     redirect, url_for, session, flash)
 from pypasswords import *
-from database import db, User, Password
+from database import db, User
 from .utils import check_inputs_login, check_inputs_signup
 
 account = Blueprint('account', __name__, static_folder='static', template_folder='templates')

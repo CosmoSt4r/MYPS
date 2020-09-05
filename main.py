@@ -1,8 +1,8 @@
 from app import app
-from database import db, User, Password
+from database import db
 from account.account import account
 from homepage.homepage import homepage
-from flask import render_template, request, redirect, session, url_for, flash
+from flask import redirect, session, url_for
 
 app.register_blueprint(account, url_prefix='/account')
 app.register_blueprint(homepage, url_prefix='/home')
