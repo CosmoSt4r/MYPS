@@ -17,7 +17,9 @@ def home():
     if request.method == 'POST':
         # POST
 
-        return redirect(url_for('homepage.new'))
+        session.pop('user')
+        flash("You've been logged out")
+        return redirect(url_for('account.login'))
     else:
         # GET
 
@@ -74,6 +76,9 @@ def new():
 
 @homepage.route('/delete/<int:pass_id>')
 def delete(pass_id):
+    if 'user' not in session:
+        return redirect(url_for('account.login'))
+
     pass_to_delete = Password.query.get_or_404(pass_id)
 
     db.session.delete(pass_to_delete)
@@ -84,6 +89,9 @@ def delete(pass_id):
 
 @homepage.route('/update/<int:pass_id>', methods=['GET', 'POST'])
 def update(pass_id):
+    if 'user' not in session:
+        return redirect(url_for('account.login'))
+
     password_to_update = Password.query.get_or_404(pass_id)
     username = session.get('user')
     key = generate_key(username)

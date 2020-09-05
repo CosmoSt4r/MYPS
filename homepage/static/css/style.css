@@ -46,7 +46,14 @@ th {
   width: 16%;
 }
 
-.new_pass input[type = "submit"]{
+.log_out {
+  position: fixed;
+  top: 8%;
+  left: 85%;
+  width: 10%;
+}
+
+input[type = "submit"]{
   font-family: Poppins, sans-serif;
   border:0;
   background: none;
@@ -63,8 +70,17 @@ th {
   cursor: pointer;
 }
 
-.new_pass input[type = "submit"]:hover{
+input[type = "submit"]:hover{
   background: #2ecc71;
+}
+
+.log_out input[type = "submit"]{
+  font-size: 12px;
+  border: 2px solid blue;
+}
+
+.log_out input[type = "submit"]:hover{
+  background: blue;
 }
 
 button {
