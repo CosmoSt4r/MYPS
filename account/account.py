@@ -16,7 +16,7 @@ def start_page():
         return redirect(url_for('account.login'))
 
 
-@account.route("/login/", methods=['GET', 'POST'])
+@account.route("/login", methods=['GET', 'POST'])
 def login():
     if 'user' in session:
         return redirect(url_for('homepage.home'))

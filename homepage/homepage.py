@@ -15,8 +15,12 @@ def home():
         return redirect(url_for('account.login'))
 
     if request.method == 'POST':
+        # POST
+
         return redirect(url_for('homepage.new'))
     else:
+        # GET
+
         username = session.get('user')
         key = generate_key(username)
 
@@ -27,6 +31,7 @@ def home():
         for password in passwords:
             data = decrypt_data(key, [password.url, password.login, password.password])
             data.append(get_strength(data[2]))
+            data.append(password.pass_id)
 
             displayed_passwords.append(data)
 
@@ -39,6 +44,7 @@ def new():
         return redirect(url_for('account.login'))
 
     if request.method == 'POST':
+        # POST
 
         url = request.form['url']
         login = request.form['login']
@@ -61,4 +67,53 @@ def new():
 
             return redirect(url_for('homepage.home'))
     else:
+        # GET
+
         return render_template('new.html')
+
+
+@homepage.route('/delete/<int:pass_id>')
+def delete(pass_id):
+    pass_to_delete = Password.query.get_or_404(pass_id)
+
+    db.session.delete(pass_to_delete)
+    db.session.commit()
+
+    return redirect(url_for('homepage.home'))
+
+
+@homepage.route('/update/<int:pass_id>', methods=['GET', 'POST'])
+def update(pass_id):
+    password_to_update = Password.query.get_or_404(pass_id)
+    username = session.get('user')
+    key = generate_key(username)
+
+    if request.method == 'POST':
+        # POST
+
+        url = request.form['url']
+        login = request.form['login']
+        password = request.form['password']
+
+        invalid = check_inputs(url, login, password)
+        if invalid:
+            flash(invalid)
+            return render_template('new.html', url=url, login=login, password=password)
+        else:
+            inputs = encrypt_data(key, [url, login, password])
+
+            password_to_update.url = inputs[0]
+            password_to_update.login = inputs[1]
+            password_to_update.password = inputs[2]
+
+            db.session.commit()
+
+            return redirect(url_for('homepage.home'))
+
+    else:
+        # GET
+        password = Password.query.filter_by(pass_id=pass_id).first()
+
+        data = decrypt_data(key, [password.url, password.login, password.password])
+
+        return render_template('update.html', password=data)

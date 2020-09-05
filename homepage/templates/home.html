@@ -33,8 +33,8 @@
       <td style="background: rgb({{ password[3][0] }}, {{ password[3][1] }}, 0)">{{ password[3][2] }}</td>
       <td>
         <form>
-          <button class="red" formaction="">Delete</button>
-          <button class="blue" formaction="">Update</button>
+          <button class="blue" formaction="update/{{ password[4] }}">Update</button>
+          <button class="red" formaction="delete/{{ password[4] }}">Delete</button>
         </form>
       </td>
     </tr>
