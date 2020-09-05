@@ -57,3 +57,14 @@ def get_strength(password):
         strength = 'Very Strong'
 
     return red, green, strength
+
+
+def check_inputs(url, login, password):
+    if not url:
+        return "URL field can't be blank"
+    elif not login:
+        return "Login field can't be blank"
+    elif not password:
+        return "Password field can't be blank"
+    else:
+        return False

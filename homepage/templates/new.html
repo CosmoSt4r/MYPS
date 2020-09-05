@@ -6,16 +6,24 @@
 
 <h1>New password</h1>
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for msg in messages %}
+      <p class="message">{{msg}}</p>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
 <form class="box" method="post">
 
   <h3>URL</h3>
-  <input type="text" name="url"/>
+  <input type="text" name="url" value="{{ url }}"/>
 
   <h3>Login</h3>
-  <input type="text" name="login"/>
+  <input type="text" name="login" value="{{ login }}"/>
 
   <h3>Password</h3>
-  <input type="text" name="password"/>
+  <input type="text" name="password" value="{{ password }}"/>
 
   <input type="submit" value="Create"/>
 </form>

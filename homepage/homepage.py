@@ -33,20 +33,26 @@ def home():
 @homepage.route("/new", methods=['POST', 'GET'])
 def new():
     if request.method == 'POST':
+
         url = request.form['url']
         login = request.form['login']
         password = request.form['password']
 
-        username = session.get('user')
-        key = generate_key(username)
+        invalid = check_inputs(url, login, password)
+        if invalid:
+            flash(invalid)
+            return render_template('new.html', url=url, login=login, password=password)
+        else:
+            username = session.get('user')
+            key = generate_key(username)
 
-        inputs = encrypt_data(key, [url, login, password])
-        owner_id = User.query.filter_by(username=hash_it(username)).first().user_id
+            inputs = encrypt_data(key, [url, login, password])
+            owner_id = User.query.filter_by(username=hash_it(username)).first().user_id
 
-        new_password = Password(*inputs, owner_id)
-        db.session.add(new_password)
-        db.session.commit()
+            new_password = Password(*inputs, owner_id)
+            db.session.add(new_password)
+            db.session.commit()
 
-        return redirect(url_for('homepage.home'))
+            return redirect(url_for('homepage.home'))
     else:
         return render_template('new.html')
