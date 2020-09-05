@@ -23,7 +23,11 @@
   {% for password in passwords %}
 
     <tr>
-      <td>{{ password[0] }}</td>
+      <td>
+        <img src="https://www.google.com/s2/favicons?domain={{ password[0] }}"
+                height="14px" alt="favicon"/>
+        {{ password[0] }}
+      </td>
       <td>{{ password[1] }}</td>
       <td>{{ password[2] }}</td>
       <td style="background: rgb({{ password[3][0] }}, {{ password[3][1] }}, 0)">{{ password[3][2] }}</td>

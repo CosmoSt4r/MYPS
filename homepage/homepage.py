@@ -11,6 +11,9 @@ homepage = Blueprint('homepage', __name__, static_folder='static', template_fold
 
 @homepage.route("/", methods=['POST', 'GET'])
 def home():
+    if 'user' not in session:
+        return redirect(url_for('account.login'))
+
     if request.method == 'POST':
         return redirect(url_for('homepage.new'))
     else:
@@ -32,6 +35,9 @@ def home():
 
 @homepage.route("/new", methods=['POST', 'GET'])
 def new():
+    if 'user' not in session:
+        return redirect(url_for('account.login'))
+
     if request.method == 'POST':
 
         url = request.form['url']
