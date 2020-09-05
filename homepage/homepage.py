@@ -1,7 +1,6 @@
 from flask import (
     Blueprint, render_template, request,
     redirect, url_for, session, flash)
-from app import app
 from pypasswords import *
 from database import db, User, Password
 from .utils import *
@@ -18,7 +17,14 @@ def home():
         username = session.get('user')
         key = generate_key(username)
 
-        return render_template('home.html')
+        user_id = User.query.filter_by(username=hash_it(username)).first().user_id
+        passwords = Password.query.filter_by(owner_id=user_id).all()
+
+        displayed_passwords = []
+        for password in passwords:
+            displayed_passwords.append(decrypt_data(key, [password.url, password.login, password.password]))
+
+        return render_template('home.html', passwords=displayed_passwords)
 
 
 @homepage.route("/new", methods=['POST', 'GET'])
@@ -29,9 +35,16 @@ def new():
         password = request.form['password']
 
         username = session.get('user')
+        print(username)
         key = generate_key(username)
-        inputs = encrypt_data(key, [url, login, password])
 
-        return render_template('new.html')  # # #
+        inputs = encrypt_data(key, [url, login, password])
+        owner_id = User.query.filter_by(username=hash_it(username)).first().user_id
+
+        new_password = Password(*inputs, owner_id)
+        db.session.add(new_password)
+        db.session.commit()
+
+        return redirect(url_for('homepage.home'))
     else:
         return render_template('new.html')

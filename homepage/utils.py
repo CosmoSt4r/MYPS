@@ -32,5 +32,6 @@ def decrypt_data(key, inputs):
     output = []
     for str_to_decrypt in inputs:
         dec = Fernet(key)
-        output.append(dec.decrypt(str_to_decrypt))
+        decoded_str = dec.decrypt(str_to_decrypt)
+        output.append(decoded_str.decode())
     return output

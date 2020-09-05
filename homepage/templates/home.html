@@ -20,17 +20,17 @@
     <th>Actions</th>
   </tr>
 
-  {% for task in tasks %}
+  {% for password in passwords %}
 
     <tr>
-      <td>url</td>
-      <td>login</td>
-      <td>password</td>
+      <td>{{ password[0] }}</td>
+      <td>{{ password[1] }}</td>
+      <td>{{ password[2] }}</td>
       <td>strength</td>
       <td>
         <form>
-          <button class="red" formaction="/delete/{{task.task_id}}">Delete</button>
-          <button class="blue" formaction="/update/{{task.task_id}}">Update</button>
+          <button class="red" formaction="">Delete</button>
+          <button class="blue" formaction="">Update</button>
         </form>
       </td>
     </tr>

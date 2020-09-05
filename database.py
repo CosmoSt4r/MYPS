@@ -28,10 +28,11 @@ class Password(db.Model):
     created = db.Column(db.DateTime, default=datetime.now)
     owner_id = db.Column(db.Integer, db.ForeignKey('user.user_id'), nullable=False)
 
-    def __init__(self, url, login, password):
+    def __init__(self, url, login, password, owner_id):
         self.url = url
         self.login = login
         self.password = password
+        self.owner_id = owner_id
 
     def __repr__(self):
         return f'<{self.url} - {self.login}>'
