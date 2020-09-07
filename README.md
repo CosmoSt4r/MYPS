@@ -35,7 +35,7 @@ __________________________
 
 ### Clone
 
-Clone this repo to your local machine using `https://github.com/CosmoSt4r/MYPS`
+Clone this repo to your local machine using `git clone https://github.com/CosmoSt4r/MYPS`
 
 ### Required packages
 
